@@ -1,0 +1,83 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Spotify Quick Stats</title>
+  <link rel="stylesheet" href="styles.css" />
+</head>
+<body>
+  <main class="container">
+    <header class="header">
+      <h1>Spotify Quick Stats</h1>
+      <p class="sub">Paste your <strong>Access Token</strong> and fetch your stats. No login required.</p>
+    </header>
+
+    <section class="card">
+      <h2>Access Token</h2>
+      <label for="token">Spotify Access Token</label>
+      <textarea id="token" rows="3" placeholder="Paste your access token (starts with 'BQ...')"></textarea>
+
+      <div class="row">
+        <label class="checkbox">
+          <input type="checkbox" id="rememberToken" />
+          <span>Remember token on this device</span>
+        </label>
+        <button id="btnValidate" class="btn secondary">Validate Token</button>
+      </div>
+
+      <div id="whoami" class="muted"></div>
+      <div id="scopeWarning" class="warn hidden"></div>
+    </section>
+
+    <section class="card">
+      <h2>What do you want?</h2>
+      <div class="grid">
+        <div>
+          <label for="mode">Data</label>
+          <select id="mode">
+            <option value="top-tracks">Top Tracks</option>
+            <option value="top-artists">Top Artists</option>
+            <option value="top-genres">Top Genres (computed)</option>
+            <option value="recently-played">Recently Played</option>
+          </select>
+        </div>
+
+        <div id="timeRangeWrap">
+          <label for="timeRange">Time Range</label>
+          <select id="timeRange">
+            <option value="short_term">Last 4 weeks</option>
+            <option value="medium_term" selected>Last 6 months</option>
+            <option value="long_term">All time</option>
+          </select>
+        </div>
+
+        <div>
+          <label for="limit">Limit</label>
+          <input id="limit" type="number" min="1" max="50" value="20" />
+        </div>
+      </div>
+
+      <div class="row">
+        <button id="btnFetch" class="btn">Get Data</button>
+        <button id="btnClear" class="btn ghost">Clear</button>
+        <button id="btnDownload" class="btn secondary" disabled>Download JSON</button>
+      </div>
+    </section>
+
+    <section id="results" class="card">
+      <h2>Results</h2>
+      <div id="out" class="out"></div>
+    </section>
+
+    <footer class="footer">
+      <p class="muted">
+        Scopes needed: <code>user-top-read</code> and <code>user-read-recently-played</code> (for Recently Played).
+        Token is stored only in your browser if you choose “Remember”.
+      </p>
+    </footer>
+  </main>
+
+  <script src="app.js"></script>
+</body>
+</html>
