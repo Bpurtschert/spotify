@@ -184,9 +184,11 @@ function renderTopTracks(items = []) {
   items.forEach((t, i) => {
     const artists = (t.artists || []).map(a => a.name).join(', ');
     const album = t.album?.name || '';
+    const img = t.album?.images?.[0]?.url || '';
     const ms = t.duration_ms || 0;
     addItem({
       title: `${pad(i+1)}. ${t.name}`,
+      img,
       lines: [
         `Artists: ${artists}`,
         album ? `Album: ${album}` : '',
@@ -197,12 +199,15 @@ function renderTopTracks(items = []) {
   });
 }
 
+
 function renderTopArtists(items = []) {
   if (!items.length) return renderEmpty('No top artists found.');
   items.forEach((a, i) => {
     const genres = (a.genres || []).slice(0, 5).join(', ');
+    const img = a.images?.[0]?.url || '';
     addItem({
       title: `${pad(i+1)}. ${a.name}`,
+      img,
       lines: [
         genres ? `Genres: ${genres}` : '',
         `Followers: ${num(a.followers?.total)}`,
@@ -211,6 +216,7 @@ function renderTopArtists(items = []) {
     });
   });
 }
+
 
 function renderTopGenres(genres = []) {
   if (!genres.length) return renderEmpty('No genres computed (need top artists).');
@@ -228,8 +234,10 @@ function renderRecentlyPlayed(items = []) {
     const t = it.track || {};
     const artists = (t.artists || []).map(a => a.name).join(', ');
     const playedAt = it.played_at ? new Date(it.played_at).toLocaleString() : '';
+    const img = t.album?.images?.[0]?.url || '';
     addItem({
       title: `${pad(i+1)}. ${t.name || 'Unknown Track'}`,
+      img,
       lines: [
         `Artists: ${artists}`,
         t.album?.name ? `Album: ${t.album.name}` : '',
@@ -239,6 +247,7 @@ function renderRecentlyPlayed(items = []) {
   });
 }
 
+
 function renderEmpty(msg) {
   const div = document.createElement('div');
   div.className = 'item';
@@ -247,16 +256,24 @@ function renderEmpty(msg) {
 }
 
 // --- Utilities
-function addItem({ title, lines = [] }) {
+function addItem({ title, lines = [], img }) {
   const div = document.createElement('div');
   div.className = 'item';
-  const meta = lines.filter(Boolean).map(l => `<span class="badge">${escapeHTML(l)}</span>`).join(' ');
+  
+  const meta = lines.filter(Boolean)
+    .map(l => `<span class="badge">${escapeHTML(l)}</span>`).join(' ');
+
   div.innerHTML = `
-    <div class="title">${escapeHTML(title)}</div>
-    <div class="meta">${meta}</div>
+    ${img ? `<img src="${img}" alt="" class="thumb" />` : ''}
+    <div class="content">
+      <div class="title">${escapeHTML(title)}</div>
+      <div class="meta">${meta}</div>
+    </div>
   `;
+
   els.out.appendChild(div);
 }
+
 
 function clamp(n, min, max){ return Math.max(min, Math.min(max, n)); }
 function pad(n){ return String(n).padStart(2, '0'); }
@@ -312,3 +329,4 @@ function makeDownload(obj){
     setTimeout(() => URL.revokeObjectURL(url), 1000);
   };
 }
+

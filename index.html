@@ -14,6 +14,30 @@
     </header>
 
     <section class="card">
+      <h2>How to Get Your Spotify Access Token</h2>
+      <ol>
+        <li>
+          Go to <a href="https://developer.spotify.com/" target="_blank" rel="noopener">
+            https://developer.spotify.com/
+          </a> and click <strong>“See it in action”</strong>.
+        </li>
+        <li>
+          In the “Code” box, look at the very top where you see <code>token</code>.
+        </li>
+        <li>
+          Copy everything inside the parentheses <em>(without the quotes)</em>.
+        </li>
+        <li>
+          Paste that value into the “Spotify Access Token” box above.
+        </li>
+      </ol>
+      <p class="muted">
+        Note: Access tokens expire in about 1 hour. You’ll need to repeat these steps when it stops working.
+      </p>
+    </section>
+    
+
+    <section class="card">
       <h2>Access Token</h2>
       <label for="token">Spotify Access Token</label>
       <textarea id="token" rows="3" placeholder="Paste your access token (starts with 'BQ...')"></textarea>
@@ -39,7 +63,7 @@
             <option value="top-tracks">Top Tracks</option>
             <option value="top-artists">Top Artists</option>
             <option value="top-genres">Top Genres (computed)</option>
-            <option value="recently-played">Recently Played</option>
+           <!-- <option value="recently-played">Recently Played</option> -->
           </select>
         </div>
 
